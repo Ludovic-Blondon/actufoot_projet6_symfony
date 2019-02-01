@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin éditer un article | ActuFoot{% endblock %}
+
+{% block body %}
+
+    <div class="container mt-4">
+        <h1>Editer un article</h1>
+        {{ include('admin/post/_form.html.twig', {button: 'Editer'}) }}
+    </div>
+
+{% endblock %}

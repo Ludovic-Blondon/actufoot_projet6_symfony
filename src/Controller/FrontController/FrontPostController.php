@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class FrontController extends AbstractController
+class FrontPostController extends AbstractController
 {
     /**
      * @var PostRepository
@@ -16,7 +16,7 @@ class FrontController extends AbstractController
     private $repository;
 
     /**
-     * FrontController constructor.
+     * FrontPostController constructor.
      * @param PostRepository $repository
      */
     public function __construct(PostRepository $repository)

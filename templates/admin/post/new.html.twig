@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin créer un article | ActuFoot{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>Créer un article</h1>
+        {{ include('admin/post/_form.html.twig', {button: 'Créer'}) }}
+    </div>
+
+{% endblock %}
