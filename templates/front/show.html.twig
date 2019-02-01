@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ post.title }} | ActuFoot{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="card mb-3 mt-5">
+                <img class="card-img-top" src="http://placehold.it/780x180" alt="Card image cap">
+                <div class="card-body">
+                    <h3 class="card-title text-center mt-3"><strong>{{ post.title | upper }}</strong></h3>
+                    <p class="card-text text-justify mt-5">{{ post.content }}</p>
+                    <p class="card-text"><small class="text-muted">Posté le {{ post.postAt | date("m/d/Y h:m:s") }} par {{ post.author }}</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
