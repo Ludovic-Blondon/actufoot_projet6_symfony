@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class PostType extends AbstractType
 {
@@ -17,8 +18,9 @@ class PostType extends AbstractType
             ->add('author', HiddenType::class, [
                 'data' => 'Beckenbauer'
             ])
-            ->add('content', null, [
-                'attr' => ['class' => 'tinyMceTA']
+            ->add('content', TextareaType::class, [
+                'attr' => ['class' => 'tiny-area'],
+                'required'   => false,
             ])
         ;
     }

@@ -17,10 +17,10 @@
                             <h4 class="card-title text-center">
                                 <a href="{{ path('post.show', {id: post.id, slug: post.slug}) }}"><strong>{{ post.title | upper }}</strong></a>
                             </h4>
-                            <p class="card-text text-justify">{{ post.content | slice(0, 200) }} . . . <br><a class="btn btn-primary mt-2" href="{{ path('post.show', {id: post.id, slug: post.slug}) }}">lire la suite</a></p>
+                            <p class="card-text text-justify">{{ post.content | striptags | truncate(200, true) | raw }} . . . <br><a class="btn btn-primary mt-2" href="{{ path('post.show', {id: post.id, slug: post.slug}) }}">lire la suite</a></p>
                         </div>
                         <div class="card-footer">
-                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                            <p class="card-text"><small class="text-muted">Posté le {{ post.postAt | date("d/m/Y à h:m:s") }} par {{ post.author }}</small></p>
                         </div>
                     </div>
                 </div>

@@ -44,7 +44,7 @@ class FrontPostController extends AbstractController
      */
     public function allNews(): Response
     {
-        $posts = $this->repository->findAll();
+        $posts = $this->repository->findAllDesc('DESC');
         return $this->render('front/allnews.html.twig', [
             'current_menu' => 'allnews',
             'posts' => $posts
