@@ -14,7 +14,8 @@ class PostSearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('keyWord',TextType::class,[
+            ->add('keyWord',null,[
+                'required' => false,
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Rechercher'

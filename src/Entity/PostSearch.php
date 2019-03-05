@@ -8,7 +8,7 @@ class PostSearch
     /**
      * @var string|null
      * @Assert\Length(
-     * min = 5,
+     * min = 3,
      * max = 255,
      * )
      */
