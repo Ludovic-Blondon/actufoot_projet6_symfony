@@ -3,28 +3,28 @@
 {% block title %}Toutes les news | ActuFoot{% endblock %}
 
 {% block body %}
-    <div class="container text-center mt-4">
-        <h1>All News</h1>
-        <p>Et licet quocumque oculos flexeris feminas adfatim multas spectare cirratas, quibus, si nupsissent, per aetatem ter iam nixus poterat suppetere liberorum, ad usque taedium pedibus pavimenta tergentes iactari volucriter gyris, dum exprimunt innumera simulacra, quae finxere fabulae theatrales.</p>
+    <div class="jumbotron">
+        <div class="container">
+            {{ form_start(form) }}
+            <div class="form-row align-items-end">
+                <div class="col">
+                    {{ form(form.keyWord) }}
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary">Rechercher</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
     </div>
-    <div class="container">
+    <div class="container mt-4">
         <div class="row">
             {% for post in posts %}
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <a href="{{ path('post.show', {id: post.id, slug: post.slug}) }}"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-                        <div class="card-body">
-                            <h4 class="card-title text-center">
-                                <a href="{{ path('post.show', {id: post.id, slug: post.slug}) }}"><strong>{{ post.title | upper }}</strong></a>
-                            </h4>
-                            <p class="card-text text-justify">{{ post.content | striptags | truncate(200, true) | raw }} . . . <br><a class="btn btn-primary mt-2" href="{{ path('post.show', {id: post.id, slug: post.slug}) }}">lire la suite</a></p>
-                        </div>
-                        <div class="card-footer">
-                            <p class="card-text"><small class="text-muted">Posté le {{ post.postAt | date("d/m/Y à h:m:s") }} par {{ post.author }}</small></p>
-                        </div>
-                    </div>
-                </div>
+                {% include 'front/_post.html.twig' %}
             {% endfor %}
+        </div>
+        <div class="pagination d-flex justify-content-center">
+            {{ knp_pagination_render(posts) }}
         </div>
     </div>
 {% endblock %}

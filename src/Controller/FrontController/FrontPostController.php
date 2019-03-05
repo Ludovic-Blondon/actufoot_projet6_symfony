@@ -3,8 +3,12 @@
 namespace App\Controller\FrontController;
 
 use App\Entity\Post;
+use App\Entity\PostSearch;
+use App\Form\PostSearchType;
 use App\Repository\PostRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -42,12 +46,21 @@ class FrontPostController extends AbstractController
      * @Route("/toutes-les-news", name="allNews")
      * @return Response
      */
-    public function allNews(): Response
+    public function allNews(PaginatorInterface $paginator, Request $request): Response
     {
-        $posts = $this->repository->findAllDesc('DESC');
+        $search = new PostSearch();
+        $form = $this->createForm(PostSearchType::class, $search);
+        $form->handleRequest($request);
+
+        $posts = $paginator->paginate(
+            $this->repository->findAllDescQuery($search),
+            $request->query->getInt('page', 1),
+            3
+        );
         return $this->render('front/allnews.html.twig', [
             'current_menu' => 'allnews',
-            'posts' => $posts
+            'posts' => $posts,
+            'form' => $form->createView(),
         ]);
     }
 

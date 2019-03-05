@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Post;
+use App\Entity\PostSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -32,14 +34,23 @@ class PostRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return array Post[]
+     * @return Query
      */
-    public function findAllDesc(): array
+    public function findAllDescQuery(PostSearch $search): Query
     {
-        return $this->createQueryBuilder('p')
-            ->orderBy('p.post_at', 'DESC')
-            ->getQuery()
-            ->getResult();
+        $query = $this->createQueryBuilder('p')
+            ->orderBy('p.post_at', 'DESC');
+
+        if ($search->getKeyWord()) {
+            $query = $query
+                ->Where('p.title LIKE :keyword')
+                ->orWhere('p.content LIKE :keyword')
+                ->setParameter('keyword', '%' . $search->getKeyWord() . '%')
+            ;
+        }
+
+        return $query->getQuery();
+
     }
 
     // /**
