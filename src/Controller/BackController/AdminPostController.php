@@ -4,8 +4,11 @@ namespace App\Controller\BackController;
 
 
 use App\Entity\Post;
+use App\Entity\PostSearch;
+use App\Form\PostSearchType;
 use App\Form\PostType;
 use Doctrine\Common\Persistence\ObjectManager;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use \Symfony\Component\HttpFoundation\Response;
 use App\Repository\PostRepository;
@@ -38,10 +41,21 @@ class AdminPostController extends AbstractController
      * @Route("/admin", name="admin.post.home")
      * @return Response
      */
-    public function homeAdmin(): Response
+    public function homeAdmin(PaginatorInterface $paginator, Request $request): Response
     {
-        $posts = $this->repository->findAll();
-        return $this->render('admin/post/home.html.twig', compact('posts'));
+        $search = new PostSearch();
+        $form = $this->createForm(PostSearchType::class, $search);
+        $form->handleRequest($request);
+
+        $posts = $paginator->paginate(
+            $this->repository->findAllDescQuery($search),
+            $request->query->getInt('page', 1),
+            5
+        );
+        return $this->render('admin/post/home.html.twig', [
+            'posts' => $posts,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**

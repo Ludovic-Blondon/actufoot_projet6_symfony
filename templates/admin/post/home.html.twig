@@ -3,14 +3,33 @@
 {% block title %}Admin gérer les articles | ActuFoot{% endblock %}
 
 {% block body %}
+    <div class="jumbotron py-4">
+        <div class="container">
+            {{ form_start(form) }}
+            <div class="form-row align-items-end">
+                <div class="col">
+                    {{ form(form.keyWord) }}
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary">Rechercher</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
     <div class="container mt-4">
-        <h1>Gérer les articles</h1>
         {% for message in app.flashes('success') %}
             <div class="alert alert-success">
                 {{ message }}
             </div>
         {% endfor %}
-        <table class="table table-striped">
+        <div class="d-flex justify-content-between align-items-end">
+            <h1>Gérer les articles</h1>
+            <div class="text-right">
+                <a href="{{ path('admin.post.new') }}" class="btn btn-primary">Créer</a>
+            </div>
+        </div>
+        <table class="table table-striped mt-4">
             <thead>
                 <tr>
                     <th>Titre</th>
@@ -33,8 +52,8 @@
             {% endfor %}
             </tbody>
         </table>
-        <div class="text-right">
-            <a href="{{ path('admin.post.new') }}" class="btn btn-primary">Créer</a>
+        <div class="pagination d-flex justify-content-center mt-4">
+            {{ knp_pagination_render(posts) }}
         </div>
     </div>
 
