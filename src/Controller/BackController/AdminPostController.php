@@ -50,11 +50,12 @@ class AdminPostController extends AbstractController
         $posts = $paginator->paginate(
             $this->repository->findAllDescQuery($search),
             $request->query->getInt('page', 1),
-            5
+            10
         );
         return $this->render('admin/post/home.html.twig', [
             'posts' => $posts,
             'form' => $form->createView(),
+            'current_menu' => 'adminPost',
         ]);
     }
 
@@ -78,7 +79,8 @@ class AdminPostController extends AbstractController
 
         return $this->render('admin/post/new.html.twig', [
             'post' => $post,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'current_menu' => 'adminPost',
         ]);
     }
 
@@ -101,7 +103,8 @@ class AdminPostController extends AbstractController
 
         return $this->render('admin/post/edit.html.twig', [
             'post' => $post,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'current_menu' => 'adminPost',
         ]);
     }
 

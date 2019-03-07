@@ -3,8 +3,11 @@
 namespace App\Controller\BackController;
 
 use App\Entity\Category;
+use App\Entity\PostSearch;
 use App\Form\CategoryType;
+use App\Form\PostSearchType;
 use App\Repository\CategoryRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,18 +18,50 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AdminCategoryController extends AbstractController
 {
+
+    /**
+     * @var CategoryRepository
+     */
+    private $repository;
+
+    /**
+     * AdminCategoryController constructor.
+     * @param CategoryRepository $repository
+     */
+    public function __construct(CategoryRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * @Route("/", name="admin.category.home", methods={"GET"})
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     * @return Response
      */
-    public function index(CategoryRepository $categoryRepository): Response
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
+        $search = new PostSearch();
+        $form = $this->createForm(PostSearchType::class, $search);
+        $form->handleRequest($request);
+
+        $categories = $paginator->paginate(
+            $this->repository->findAllWithSearch($search),
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('admin/category/home.html.twig', [
-            'categories' => $categoryRepository->findAll(),
+            'categories' => $categories,
+            'current_menu' => 'adminCategory',
+            'form' => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/new", name="admin.category.new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -45,11 +80,15 @@ class AdminCategoryController extends AbstractController
         return $this->render('admin/category/new.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
+            'current_menu' => 'adminCategory',
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="admin.category.edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Category $category
+     * @return Response
      */
     public function edit(Request $request, Category $category): Response
     {
@@ -67,11 +106,15 @@ class AdminCategoryController extends AbstractController
         return $this->render('admin/category/edit.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
+            'current_menu' => 'adminCategory',
         ]);
     }
 
     /**
      * @Route("/{id}", name="admin.category.delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Category $category
+     * @return Response
      */
     public function delete(Request $request, Category $category): Response
     {

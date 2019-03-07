@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Category;
+use App\Entity\PostSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -17,6 +19,23 @@ class CategoryRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Category::class);
+    }
+
+    /**
+     * @return Query
+     */
+    public function findAllWithSearch(PostSearch $search): Query
+    {
+        $query = $this->createQueryBuilder('c');
+
+        if ($search->getKeyWord()) {
+            $query = $query
+                ->Where('c.name LIKE :keyword')
+                ->setParameter('keyword', '%' . $search->getKeyWord() . '%')
+            ;
+        }
+
+        return $query->getQuery();
     }
 
     // /**

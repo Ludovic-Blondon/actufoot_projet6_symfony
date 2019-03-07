@@ -50,7 +50,6 @@ class PostRepository extends ServiceEntityRepository
         }
 
         return $query->getQuery();
-
     }
 
     // /**

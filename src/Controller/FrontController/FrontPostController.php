@@ -2,6 +2,7 @@
 
 namespace App\Controller\FrontController;
 
+use App\Entity\Category;
 use App\Entity\Post;
 use App\Entity\PostSearch;
 use App\Form\PostSearchType;
@@ -79,6 +80,18 @@ class FrontPostController extends AbstractController
         return $this->render('front/show.html.twig', [
             'current_menu' => 'allnews',
             'post' => $post
+        ]);
+    }
+
+    /**
+     * @Route("/categorie/{slug}-{id}", name="category", requirements={"slug": "[a-z0-9\-]*"})
+     * @return Response
+     */
+    public function showByCategory(Category $category): Response
+    {
+        return $this->render('front/bycategory.html.twig', [
+            'current_menu' => 'category',
+            'category' => $category
         ]);
     }
 }

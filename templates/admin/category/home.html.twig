@@ -1,9 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/base.html.twig' %}
 
 {% block title %}Admin gérer les catégories | ActuFoot{% endblock %}
 
 {% block body %}
-    {#
     <div class="jumbotron py-4">
         <div class="container">
             {{ form_start(form) }}
@@ -17,7 +16,7 @@
             </div>
             {{ form_end(form) }}
         </div>
-    </div>#}
+    </div>
     <div class="container mt-4">
         {% for message in app.flashes('success') %}
             <div class="alert alert-success">
@@ -53,10 +52,9 @@
             {% endfor %}
             </tbody>
         </table>
-        {#
         <div class="pagination d-flex justify-content-center mt-4">
-            {{ knp_pagination_render(posts) }}
-        </div>#}
+            {{ knp_pagination_render(categories) }}
+        </div>
     </div>
 
 {% endblock %}
