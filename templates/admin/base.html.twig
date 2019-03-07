@@ -13,21 +13,24 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav">
+            {% if app.user %}
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('logout') }}">Se deconnecter</a>
+                            </li>
+                        </ul>
+                    <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('logout') }}">Se deconnecter</a>
+                            <a class="nav-link {% if current_menu is defined and current_menu == 'adminPost' %}active{% endif %}" href="{{ path('admin.post.home') }}">Articles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if current_menu is defined and current_menu == 'adminCategory' %}active{% endif %}" href="{{ path('admin.category.home') }}">Categories</a>
                         </li>
                     </ul>
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link {% if current_menu is defined and current_menu == 'adminPost' %}active{% endif %}" href="{{ path('admin.post.home') }}">Articles</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if current_menu is defined and current_menu == 'adminCategory' %}active{% endif %}" href="{{ path('admin.category.home') }}">Categories</a>
-                    </li>
-                </ul>
-            </div>
+                </div>
+            {% endif %}
         </nav>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}

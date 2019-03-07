@@ -23,7 +23,7 @@
                 {% endif %}
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link {% if current_menu is defined and current_menu == 'home' %}active{% endif %}" href="{{ path('home') }}">Home</a>
+                        <a class="nav-link {% if current_menu is defined and current_menu == 'home' %}active{% endif %}" href="{{ path('home') }}">Accueil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if current_menu is defined and current_menu == 'allnews' %}active{% endif %}" href="{{ path('allNews') }}">Toutes les News</a>
@@ -33,6 +33,9 @@
                             Catégories
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            {% for category in categories %}
+                                <a class="dropdown-item" href="{{ path('category', {id: category.id, slug: category.slug}) }}">{{ category.name }}</a>
+                            {% endfor %}
                         </div>
                     </li>
                 </ul>

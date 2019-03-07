@@ -6,6 +6,7 @@ use App\Entity\Category;
 use App\Entity\Post;
 use App\Entity\PostSearch;
 use App\Form\PostSearchType;
+use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,14 +20,20 @@ class FrontPostController extends AbstractController
      * @var PostRepository
      */
     private $repository;
+    /**
+     * @var CategoryRepository
+     */
+    private $categoryRepository;
 
     /**
      * FrontPostController constructor.
      * @param PostRepository $repository
+     * @param CategoryRepository $categoryRepository
      */
-    public function __construct(PostRepository $repository)
+    public function __construct(PostRepository $repository, CategoryRepository $categoryRepository)
     {
         $this->repository = $repository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -35,9 +42,11 @@ class FrontPostController extends AbstractController
      */
     public function home(): Response
     {
+        $categoriesNav = $this->categoryRepository->findAll();
         $posts = $this->repository->findLatest();
         return $this->render('front/home.html.twig', [
             'current_menu' => 'home',
+            'categories' => $categoriesNav,
             'posts' => $posts
         ]);
 
@@ -49,6 +58,8 @@ class FrontPostController extends AbstractController
      */
     public function allNews(PaginatorInterface $paginator, Request $request): Response
     {
+        $categoriesNav = $this->categoryRepository->findAll();
+
         $search = new PostSearch();
         $form = $this->createForm(PostSearchType::class, $search);
         $form->handleRequest($request);
@@ -60,6 +71,7 @@ class FrontPostController extends AbstractController
         );
         return $this->render('front/allnews.html.twig', [
             'current_menu' => 'allnews',
+            'categories' => $categoriesNav,
             'posts' => $posts,
             'form' => $form->createView(),
         ]);
@@ -71,6 +83,8 @@ class FrontPostController extends AbstractController
      */
     public function show(Post $post, string $slug)
     {
+        $categoriesNav = $this->categoryRepository->findAll();
+
         if ($post->getSlug() !== $slug){
             return $this->redirectToRoute('post.show', [
                 'id' => $post->getId(),
@@ -79,6 +93,7 @@ class FrontPostController extends AbstractController
         }
         return $this->render('front/show.html.twig', [
             'current_menu' => 'allnews',
+            'categories' => $categoriesNav,
             'post' => $post
         ]);
     }
@@ -89,8 +104,11 @@ class FrontPostController extends AbstractController
      */
     public function showByCategory(Category $category): Response
     {
+        $categoriesNav = $this->categoryRepository->findAll();
+
         return $this->render('front/bycategory.html.twig', [
             'current_menu' => 'category',
+            'categories' => $categoriesNav,
             'category' => $category
         ]);
     }
