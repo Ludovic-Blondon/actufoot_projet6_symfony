@@ -47,6 +47,11 @@ class Post
      */
     private $post_at;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="posts")
+     */
+    private $category;
+
     public function __construct()
     {
         $this->post_at = new \DateTime();
@@ -106,6 +111,18 @@ class Post
     public function setPostAt(\DateTimeInterface $post_at): self
     {
         $this->post_at = $post_at;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

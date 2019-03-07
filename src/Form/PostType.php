@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Post;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,9 +17,11 @@ class PostType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('author', HiddenType::class, [
-                'data' => 'Beckenbauer'
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'choice_label' => 'name'
             ])
+            ->add('author', HiddenType::class)
             ->add('content', TextareaType::class, [
                 'attr' => ['class' => 'tiny-area'],
                 'required'   => false,

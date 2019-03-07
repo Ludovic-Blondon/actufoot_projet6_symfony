@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin gérer les catégories | ActuFoot{% endblock %}
+
+{% block body %}
+    {#
+    <div class="jumbotron py-4">
+        <div class="container">
+            {{ form_start(form) }}
+            <div class="form-row align-items-end">
+                <div class="col">
+                    {{ form(form.keyWord) }}
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary">Rechercher</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>#}
+    <div class="container mt-4">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <div class="d-flex justify-content-between align-items-end">
+            <h1>Gérer les catégories</h1>
+            <div class="text-right">
+                <a href="{{ path('admin.category.new') }}" class="btn btn-primary">Créer</a>
+            </div>
+        </div>
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for category in categories %}
+                <tr>
+                    <td>{{ category.name }}</td>
+                    <td>
+                        <a href="{{ path('admin.category.edit', {id: category.id}) }}" class="btn btn-secondary">Editer</a>
+                        <form method="post" action="{{ path('admin.category.delete', {id: category.id}) }}" style="display: inline-block" onsubmit="return confirm('Voulez vous supprimer définitivement votre categorie ?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
+                            <button class="btn btn-danger">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {#
+        <div class="pagination d-flex justify-content-center mt-4">
+            {{ knp_pagination_render(posts) }}
+        </div>#}
+    </div>
+
+{% endblock %}
