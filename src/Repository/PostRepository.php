@@ -34,6 +34,7 @@ class PostRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param PostSearch $search
      * @return Query
      */
     public function findAllDescQuery(PostSearch $search): Query
@@ -43,7 +44,7 @@ class PostRepository extends ServiceEntityRepository
 
         if ($search->getKeyWord()) {
             $query = $query
-                ->Where('p.title LIKE :keyword')
+                ->where('p.title LIKE :keyword')
                 ->orWhere('p.content LIKE :keyword')
                 ->setParameter('keyword', '%' . $search->getKeyWord() . '%')
             ;

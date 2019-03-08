@@ -6,11 +6,12 @@
     <div class="container">
         <div class="row">
             <div class="card mb-3 mt-5">
-                <img class="card-img-top" src="http://placehold.it/780x180" alt="Card image cap">
+                <img class="card-img-top" src="{{ vich_uploader_asset(post, 'imageFile') }}" alt="Card image cap">
                 <div class="card-body">
+                    <h6><a href="{{ path('category', {id: post.category.id, slug: post.category.slug}) }}">{{ post.category }}</a></h6>
                     <h3 class="card-title text-center mt-3"><strong>{{ post.title | upper }}</strong></h3>
                     <p class="card-text text-justify mt-5">{{ post.content | raw }}</p>
-                    <p class="card-text"><small class="text-muted">Posté le {{ post.postAt | date("d/m/Y à h:m:s") }} par {{ post.author }}</small></p>
+                    <p class="card-text"><small class="text-muted">Posté le {{ post.postAt | date("d/m/Y à h:m") }} par {{ post.author }}</small></p>
                 </div>
             </div>
         </div>

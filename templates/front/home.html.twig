@@ -12,14 +12,14 @@
             {% for  post in posts %}
                 {% if loop.first %}
                     <div class="card mb-3 mt-5 mx-auto">
-                        <a href="{{ path('post.show', {id: post.id, slug: post.slug}) }}"><img class="card-img-top" src="http://placehold.it/780x180" alt="Card image cap"></a>
+                        <a href="{{ path('post.show', {id: post.id, slug: post.slug}) }}"><img class="card-img-top" src="{{ vich_uploader_asset(post, 'imageFile') }}" alt="Card image cap"></a>
                         <div class="card-body">
                             <h6><a href="{{ path('category', {id: post.category.id, slug: post.category.slug}) }}">{{ post.category }}</a></h6>
                             <h3 class="card-title text-center mt-3">
                                 <a href="{{ path('post.show', {id: post.id, slug: post.slug}) }}"><strong>{{ post.title | upper }}</strong></a>
                             </h3>
                             <p class="card-text text-justify mt-5">{{ post.content | striptags | slice(0, 400) | raw }} . . .<br><a class="btn btn-primary mt-2" href="{{ path('post.show', {id: post.id, slug: post.slug}) }}">lire la suite</a></p>
-                            <p class="card-text"><small class="text-muted">Posté le {{ post.postAt | date("m/d/Y à h:m:s") }} par {{ post.author }}</small></p>
+                            <p class="card-text"><small class="text-muted">Posté le {{ post.postAt | date("d/m/Y à h:m") }} par {{ post.author }}</small></p>
                         </div>
                     </div>
                 {% else %}

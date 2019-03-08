@@ -1,6 +1,6 @@
 <div class="col-lg-4 col-md-6 mb-4">
     <div class="card h-100">
-        <a href="{{ path('post.show', {id: post.id, slug: post.slug}) }}"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+        <a href="{{ path('post.show', {id: post.id, slug: post.slug}) }}"><img class="card-img-top" src="{{ vich_uploader_asset(post, 'imageFile') }}" alt="{{ post.title }}"></a>
         <div class="card-body d-flex flex-column justify-content-between">
             <h6><a href="{{ path('category', {id: post.category.id, slug: post.category.slug}) }}">{{ post.category }}</a></h6>
             <h4 class="card-title text-center">
@@ -10,7 +10,7 @@
             <p><a class="btn btn-primary mt-2" href="{{ path('post.show', {id: post.id, slug: post.slug}) }}">lire la suite</a></p>
         </div>
         <div class="card-footer">
-            <p class="card-text"><small class="text-muted">Posté le {{ post.postAt | date("d/m/Y à h:m:s") }} par {{ post.author }}</small></p>
+            <p class="card-text"><small class="text-muted">Posté le {{ post.postAt | date("d/m/Y à h:m") }} par {{ post.author }}</small></p>
         </div>
     </div>
 </div>

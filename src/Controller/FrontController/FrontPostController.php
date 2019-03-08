@@ -54,6 +54,8 @@ class FrontPostController extends AbstractController
 
     /**
      * @Route("/toutes-les-news", name="allNews")
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      */
     public function allNews(PaginatorInterface $paginator, Request $request): Response
@@ -67,7 +69,7 @@ class FrontPostController extends AbstractController
         $posts = $paginator->paginate(
             $this->repository->findAllDescQuery($search),
             $request->query->getInt('page', 1),
-            3
+            9
         );
         return $this->render('front/allnews.html.twig', [
             'current_menu' => 'allnews',
@@ -79,6 +81,8 @@ class FrontPostController extends AbstractController
 
     /**
      * @Route("/article/{slug}-{id}", name="post.show", requirements={"slug": "[a-z0-9\-]*"})
+     * @param Post $post
+     * @param string $slug
      * @return Response
      */
     public function show(Post $post, string $slug)
@@ -100,6 +104,7 @@ class FrontPostController extends AbstractController
 
     /**
      * @Route("/categorie/{slug}-{id}", name="category", requirements={"slug": "[a-z0-9\-]*"})
+     * @param Category $category
      * @return Response
      */
     public function showByCategory(Category $category): Response

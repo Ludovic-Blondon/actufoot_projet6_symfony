@@ -4,7 +4,8 @@
     </div>
     {{ form_row(form.author, {'value': app.user.username }) }}
     <div class="row">
-        <div class="col-md-12">{{ form_row(form.category) }}</div>
+        <div class="col-md-4">{{ form_row(form.category) }}</div>
+        <div class="col-md-4">{{ form_row(form.imageFile) }}</div>
     </div>
     <div class="row">
         <div class="col-md-12">{{ form_row(form.content) }}</div>
