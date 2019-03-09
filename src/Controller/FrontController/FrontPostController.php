@@ -105,16 +105,39 @@ class FrontPostController extends AbstractController
     /**
      * @Route("/categorie/{slug}-{id}", name="category", requirements={"slug": "[a-z0-9\-]*"})
      * @param Category $category
+     * @param int $id
+     * @param string $slug
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      */
-    public function showByCategory(Category $category): Response
+    public function showByCategory(Category $category, int $id, string $slug, PaginatorInterface $paginator, Request $request): Response
     {
+        if ($category->getSlug() !== $slug){
+            return $this->redirectToRoute('category', [
+                'id' => $category->getId(),
+                'slug' => $category->getSlug()
+            ], 301);
+        }
+
         $categoriesNav = $this->categoryRepository->findAll();
+
+        $search = new PostSearch();
+        $form = $this->createForm(PostSearchType::class, $search);
+        $form->handleRequest($request);
+
+        $posts = $paginator->paginate(
+            $this->repository->findByCategory($id, $search),
+            $request->query->getInt('page', 1),
+            2
+        );
 
         return $this->render('front/bycategory.html.twig', [
             'current_menu' => 'category',
             'categories' => $categoriesNav,
-            'category' => $category
+            'category' => $category,
+            'posts' => $posts,
+            'form' => $form->createView()
         ]);
     }
 }

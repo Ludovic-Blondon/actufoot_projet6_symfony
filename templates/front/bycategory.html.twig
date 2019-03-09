@@ -3,7 +3,6 @@
 {% block title %}Toutes les news | ActuFoot{% endblock %}
 
 {% block body %}
-    {#
     <div class="jumbotron py-4">
         <div class="container">
             {{ form_start(form) }}
@@ -17,19 +16,19 @@
             </div>
             {{ form_end(form) }}
         </div>
-    </div>#}
+    </div>
     <div class="container text-center mt-4">
         <h1>Catégorie : {{ category.name }}</h1>
     </div>
     <div class="container mt-4">
         <div class="row">
-            {% for post in category.posts %}
+            {% for post in posts %}
                 {% include 'front/_post.html.twig' %}
             {% endfor %}
         </div>
-        {#
+
         <div class="pagination d-flex justify-content-center">
             {{ knp_pagination_render(posts) }}
-        </div>#}
+        </div>
     </div>
 {% endblock %}
