@@ -3,9 +3,12 @@
 namespace App\Controller\FrontController;
 
 use App\Entity\Category;
+use App\Entity\Contact;
 use App\Entity\Post;
 use App\Entity\PostSearch;
+use App\Form\ContactType;
 use App\Form\PostSearchType;
+use App\Notification\ContactNotification;
 use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -140,4 +143,36 @@ class FrontPostController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/contact", name="contact")
+     * @param Request $request
+     * @param ContactNotification $notification
+     * @return Response
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function contact(Request $request, ContactNotification $notification):Response
+    {
+        $categoriesNav = $this->categoryRepository->findAll();
+
+        $contact = new Contact();
+        $form = $this->createForm(ContactType::class, $contact);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $notification->notify($contact);
+            $this->addFlash('success', 'Votre message a bien été envoyé');
+            $this->redirectToRoute('contact');
+            return $this->redirectToRoute('contact');
+        }
+
+        return $this->render('front/contact.html.twig', [
+            'current_menu' => 'contact',
+            'categories' => $categoriesNav,
+            'form' => $form->createView()
+        ]);
+    }
+
 }

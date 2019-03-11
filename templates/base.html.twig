@@ -38,6 +38,9 @@
                             {% endfor %}
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if current_menu is defined and current_menu == 'contact' %}active{% endif %}" href="{{ path('contact') }}">Contact</a>
+                    </li>
                 </ul>
             </div>
         </nav>

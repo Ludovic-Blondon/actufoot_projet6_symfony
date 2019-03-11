@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact | ActuFoot{% endblock %}
+
+{% block body %}
+    <div class="container text-center mt-4">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% if not form.vars.valid %}
+            <div class="alert alert-danger">
+                Veuillez remplir les champs correctement
+            </div>
+        {% endif %}
+        <h1>Contactez-nous</h1>
+        <p>Pour contacter cliquez sur lr boutton ci dessous</p>
+        <button class="btn btn-primary">Contactez-nous</button>
+        <div id="contactform" class="mt-4 col-10 mx-auto">
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col">{{ form_row(form.firstName) }}</div>
+                <div class="col">{{ form_row(form.lastName) }}</div>
+            </div>
+            <div class="row">
+                <div class="col">{{ form_row(form.phone) }}</div>
+                <div class="col">{{ form_row(form.email) }}</div>
+            </div>
+            {{ form_rest(form) }}
+            <div class="form-group">
+                <button class="btn btn-primary">Envoyer</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
