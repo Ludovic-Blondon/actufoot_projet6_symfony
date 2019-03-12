@@ -22,7 +22,9 @@ class ContactType extends AbstractType
             ])
             ->add('email', EmailType::class)
             ->add('object', TextType::class)
-            ->add('message', TextareaType::class)
+            ->add('message', TextareaType::class, [
+                'attr' => [ 'rows' => '10']
+            ])
         ;
     }
 

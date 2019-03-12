@@ -14,9 +14,9 @@ let $ = require('jquery');
 global.$ = global.jQuery = $;
 //console.log($);
 
-let contactButton = $('#contact-button');
-contactButton.click((e) => {
+
+$('#contact-button').click((e) => {
     e.preventDefault();
+    $('#contact-text-button').slideUp();
     $('#contact-form').slideDown();
-    contactButton.slideUp();
 });

@@ -15,8 +15,10 @@
             </div>
         {% endif %}
         <h1>Contactez-nous</h1>
-        <p>Pour nous contacter, cliquez sur le boutton ci dessous</p>
-        <button class="btn btn-primary" id="contact-button"{% if form.vars.submitted %} style="display: none;"{% endif %}>Contactez-nous</button>
+        <div id="contact-text-button">
+            <p>Pour contacter la rédaction d'ActuFoot, cliquez sur le boutton ci dessous</p>
+            <button class="btn btn-primary" id="contact-button"{% if form.vars.submitted %} style="display: none;"{% endif %}>Contactez-nous</button>
+        </div>
         <div id="contact-form" class="mt-4 col-10 mx-auto"{% if not form.vars.submitted %} style="display: none;"{% endif %}>
             {{ form_start(form) }}
             <div class="row">
