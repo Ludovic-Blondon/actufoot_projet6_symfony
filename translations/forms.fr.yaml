@@ -1,5 +1,11 @@
+#PostType
 Title: Titre
+Category: Catégorie
+Image file: Image
 Content: Contenu
+#CategoryType
+Name: Nom
+#ContactType
 First name: Prénom
 Last name: Nom
 Phone: Téléphone
