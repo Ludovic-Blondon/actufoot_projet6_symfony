@@ -6,6 +6,7 @@
 /public/bundles/
 /var/
 /vendor/
+/public/images/
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
@@ -25,3 +26,7 @@
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###
