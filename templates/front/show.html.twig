@@ -21,21 +21,26 @@
             </div>
         </div>
         <div>
-            <h2 class="text-center">Commentaire(s)</h2>
+            <h2 class="text-center">Laissez votre commentaire</h2>
             <div class="col-md-6 mt-4">
                 {{ form_start(form) }}
                 {{ form_rest(form) }}
                 <button class="btn btn-primary">Commenter</button>
                 {{ form_end(form) }}
             </div>
-            <div class="mt-4">
+            <h2 class="text-center">Commentaire(s)</h2>
+            <table class="table table-striped mt-4">
+                <tbody>
                 {% for comment in post.comments %}
-                    <div class="mt-2">
-                        <p><strong>{{ comment.user }}</strong> <em>le {{ comment.createdAt | date("d/m/Y à h:m") }}</em></p>
-                        <p>{{ comment.content }}</p>
-                    </div>
+                    <tr>
+                        <td>
+                            <p><strong>{{ comment.user }}</strong> <em>le {{ comment.createdAt | date("d/m/Y à h:m") }}</em></p>
+                            <p>{{ comment.content }}</p>
+                        </td>
+                    </tr>
                 {% endfor %}
-            </div>
+                </tbody>
+            </table>
         </div>
     </div>
 {% endblock %}

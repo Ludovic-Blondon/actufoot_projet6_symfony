@@ -29,6 +29,9 @@
                         <li class="nav-item">
                             <a class="nav-link {% if current_menu is defined and current_menu == 'adminCategory' %}active{% endif %}" href="{{ path('admin.category.home') }}">Categories</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if current_menu is defined and current_menu == 'adminComment' %}active{% endif %}" href="{{ path('admin.comment.home') }}">Commentaires</a>
+                        </li>
                     </ul>
                 </div>
             {% endif %}

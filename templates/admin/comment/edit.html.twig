@@ -1,0 +1,17 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin gérer un commentaire | ActuFoot{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Modérer le commentaire de <strong>{{ comment.user }}</strong></h1>
+    <p>Article : {{ comment.post }}</p>
+    <p><em>le {{ comment.createdAt | date("d/m/Y à h:m") }}</em></p>
+    <p>{{ comment.content }}</p>
+    <form method="post" action="{{ path('admin.comment.delete', {id: comment.id}) }}" style="display: inline-block" onsubmit="return confirm('Voulez vous supprimer définitivement votre commentaire ?')">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+        <button class="btn btn-danger">Supprimer</button>
+    </form>
+</div>
+{% endblock %}
