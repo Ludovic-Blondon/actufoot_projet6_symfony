@@ -3,7 +3,12 @@
 {% block title %}{{ post.title }} | ActuFoot{% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div class="container mt-4">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
         <div class="row">
             <div class="card mb-3 mt-5">
                 <img class="card-img-top" src="{{ vich_uploader_asset(post, 'imageFile') | imagine_filter('large') }}" alt="Card image cap">
@@ -13,6 +18,23 @@
                     <p class="card-text text-justify mt-5">{{ post.content | raw }}</p>
                     <p class="card-text"><small class="text-muted">Posté le {{ post.postAt | date("d/m/Y à h:m") }} par {{ post.author }}</small></p>
                 </div>
+            </div>
+        </div>
+        <div>
+            <h2 class="text-center">Commentaire(s)</h2>
+            <div class="col-md-6 mt-4">
+                {{ form_start(form) }}
+                {{ form_rest(form) }}
+                <button class="btn btn-primary">Commenter</button>
+                {{ form_end(form) }}
+            </div>
+            <div class="mt-4">
+                {% for comment in post.comments %}
+                    <div class="mt-2">
+                        <p><strong>{{ comment.user }}</strong> <em>le {{ comment.createdAt | date("d/m/Y à h:m") }}</em></p>
+                        <p>{{ comment.content }}</p>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>

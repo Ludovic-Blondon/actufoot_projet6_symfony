@@ -3,9 +3,11 @@
 namespace App\Controller\FrontController;
 
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Entity\Contact;
 use App\Entity\Post;
 use App\Entity\PostSearch;
+use App\Form\CommentType;
 use App\Form\ContactType;
 use App\Form\PostSearchType;
 use App\Notification\ContactNotification;
@@ -74,6 +76,7 @@ class FrontPostController extends AbstractController
             $request->query->getInt('page', 1),
             9
         );
+
         return $this->render('front/allnews.html.twig', [
             'current_menu' => 'allnews',
             'categories' => $categoriesNav,
@@ -86,22 +89,42 @@ class FrontPostController extends AbstractController
      * @Route("/article/{slug}-{id}", name="post.show", requirements={"slug": "[a-z0-9\-]*"})
      * @param Post $post
      * @param string $slug
+     * @param Request $request
      * @return Response
      */
-    public function show(Post $post, string $slug)
+    public function show(Post $post, string $slug, Request $request): Response
     {
-        $categoriesNav = $this->categoryRepository->findAll();
-
         if ($post->getSlug() !== $slug){
             return $this->redirectToRoute('post.show', [
                 'id' => $post->getId(),
                 'slug' => $post->getSlug()
             ], 301);
         }
+
+        $comment = new Comment();
+        $comment->setPost($post);
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            $entityManager->flush();
+            $this->addFlash('success', 'Votre commentaire a bien été posté');
+
+            return $this->redirectToRoute('post.show', [
+                'id' => $post->getId(),
+                'slug' => $post->getSlug()
+            ]);
+        }
+
+        $categoriesNav = $this->categoryRepository->findAll();
+
         return $this->render('front/show.html.twig', [
             'current_menu' => 'allnews',
             'categories' => $categoriesNav,
-            'post' => $post
+            'post' => $post,
+            'form' => $form->createView()
         ]);
     }
 
