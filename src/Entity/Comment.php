@@ -37,6 +37,11 @@ class Comment
      */
     private $post;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $signal_count;
+
     public function __construct()
     {
         $this->created_at = new \DateTime();
@@ -91,6 +96,18 @@ class Comment
     public function setPost(?Post $post): self
     {
         $this->post = $post;
+
+        return $this;
+    }
+
+    public function getSignalCount(): ?int
+    {
+        return $this->signal_count;
+    }
+
+    public function setSignalCount(?int $signal_count): self
+    {
+        $this->signal_count = $signal_count;
 
         return $this;
     }

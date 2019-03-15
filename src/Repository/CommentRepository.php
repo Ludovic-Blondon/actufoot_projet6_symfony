@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
+use App\Entity\PostSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -17,6 +19,26 @@ class CommentRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Comment::class);
+    }
+
+    /**
+     * @param PostSearch $search
+     * @return Query
+     */
+    public function findAllOrderSignal(PostSearch $search): Query
+    {
+        $query = $this->createQueryBuilder('c')
+            ->orderBy('c.signal_count', 'DESC');
+
+        if ($search->getKeyWord()) {
+            $query = $query
+                ->where('c.user LIKE :keyword')
+                ->orWhere('c.content LIKE :keyword')
+                ->setParameter('keyword', '%' . $search->getKeyWord() . '%')
+            ;
+        }
+
+        return $query->getQuery();
     }
 
     // /**

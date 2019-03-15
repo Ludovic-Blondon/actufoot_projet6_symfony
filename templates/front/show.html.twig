@@ -24,8 +24,6 @@
             <h2 class="text-center">Laissez votre commentaire</h2>
             <div class="col-md-6 mt-4">
                 {{ form_start(form) }}
-                {{ form_rest(form) }}
-                <button class="btn btn-primary">Commenter</button>
                 {{ form_end(form) }}
             </div>
             <h2 class="text-center">Commentaire(s)</h2>
@@ -34,7 +32,7 @@
                 {% for comment in post.comments %}
                     <tr>
                         <td>
-                            <p><strong>{{ comment.user }}</strong> <em>le {{ comment.createdAt | date("d/m/Y à h:m") }}</em></p>
+                            <p><strong>{{ comment.user }}</strong> <em>le {{ comment.createdAt | date("d/m/Y à h:m") }}</em> <a href="{{ path('comment.signal', {id: comment.id}) }}" class="badge badge-danger">Signaler</a></p>
                             <p>{{ comment.content }}</p>
                         </td>
                     </tr>

@@ -3,7 +3,10 @@
 namespace App\Controller\BackController;
 
 use App\Entity\Comment;
+use App\Entity\PostSearch;
+use App\Form\PostSearchType;
 use App\Repository\CommentRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,14 +31,26 @@ class AdminCommentController extends AbstractController
 
     /**
      * @Route("/admin/comment", name="admin.comment.home")
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     * @return Response
      */
-    public function index()
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
-        $comments = $this->repository->findAll();
+        $search = new PostSearch();
+        $form = $this->createForm(PostSearchType::class, $search);
+        $form->handleRequest($request);
+
+        $comments = $paginator->paginate(
+            $this->repository->findAllOrderSignal($search),
+            $request->query->getInt('page', 1),
+            10
+        );
 
         return $this->render('admin/comment/home.html.twig', [
             'controller_name' => 'AdminCommentController',
             'current_menu' => 'adminComment',
+            'form' => $form->createView(),
             'comments' => $comments
         ]);
     }

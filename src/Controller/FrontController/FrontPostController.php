@@ -198,4 +198,26 @@ class FrontPostController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/article/comment/{id}", name="comment.signal")
+     * @param Comment $comment
+     * @return Response
+     */
+    public function signalComment(Comment $comment): Response
+    {
+        $comment->setSignalCount( $comment->getSignalCount() + 1);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($comment);
+        $entityManager->flush();
+        $post = $comment->getPost();
+        $slug = $post->getSlug();
+        $postId = $post->getId();
+
+        $this->addFlash('success', 'Votre signalement a bien été prit en compte merci');
+
+        return $this->redirectToRoute('post.show', [
+            'slug' => $slug,
+            'id' => $postId
+        ]);
+    }
 }
