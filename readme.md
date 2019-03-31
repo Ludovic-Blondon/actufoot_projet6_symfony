@@ -1,6 +1,6 @@
-# projet5-ActuFoot
+# projet5-ActuFoot-SYMFONY
 [lien vers le site](http://projet5.lb-developpeur.fr/)
-##Refonte du projet 5 avec Symfony
+<p>Refonte du projet 5 avec Symfony<p>
 <p>Besoin pour le site :</p>
 <ul>
 	<li>Interface CRUD (Create, Read, Update, Delete)</li>
