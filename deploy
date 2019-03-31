@@ -1,0 +1,2 @@
+npm run build
+rsync -av ./ u94387052@home747846063.1and1-data.host:~/projet6 --include=public/build --include=public/.htaccess --include=vendor --exclude-from=.gitignore --exclude=".*"
