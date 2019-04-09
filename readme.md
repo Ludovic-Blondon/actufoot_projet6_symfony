@@ -1,11 +1,11 @@
-# projet5-ActuFoot-SYMFONY
-[lien vers le site](http://projet5.lb-developpeur.fr/)
+# projet6-ActuFoot-SYMFONY
+[lien vers le site](http://projet6.lb-developpeur.fr/)
 <p>Refonte du projet 5 avec Symfony<p>
 <p>Besoin pour le site :</p>
 <ul>
 	<li>Interface CRUD (Create, Read, Update, Delete)</li>
 	<li>Interface de rédaction -> TinyMCE</li>
-	<li>Commentaires possible sur chaque billet, avec possibilité d'en signaler un pour être modéré</li>
+	<li>Commentaires possible sur chaque article, avec possibilité d'en signaler un pour être modéré</li>
 	<li>Administration protégée par un mot de passe</li>
 </ul>
 <p>Contraintes techniques :</p>
