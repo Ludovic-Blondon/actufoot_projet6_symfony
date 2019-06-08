@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 
 class CommentType extends AbstractType
 {
@@ -19,7 +20,7 @@ class CommentType extends AbstractType
                     'placeholder' => 'Pseudo'
                 ]
             ])
-            ->add('content', null, [
+            ->add('content', CKEditorType::class, [
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Votre commentaire ...',

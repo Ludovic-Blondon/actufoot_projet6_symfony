@@ -26,3 +26,9 @@
 <ul>
 	<li>Authentifiant: Beckenbauer</li>
 	<li>Mot de passe: demo</li>
+</ul>
+<p>Entrer ces commandes :</p>
+<p>composer install</p>
+<p>npm install / yarn</p>
+<p>npm run build</p>
+<p>php bin/console assets:install --symlink</p>

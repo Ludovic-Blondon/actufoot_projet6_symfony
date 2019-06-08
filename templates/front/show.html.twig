@@ -33,7 +33,7 @@
                     <tr>
                         <td>
                             <p><strong>{{ comment.user }}</strong> <em>le {{ comment.createdAt | date("d/m/Y à h:m") }}</em> <a href="{{ path('comment.signal', {id: comment.id}) }}" class="badge badge-danger">Signaler</a></p>
-                            <p>{{ comment.content }}</p>
+                            <p>{{ comment.content | raw }}</p>
                         </td>
                     </tr>
                 {% endfor %}

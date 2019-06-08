@@ -101,6 +101,18 @@
     "fig/link-util": {
         "version": "1.0.0"
     },
+    "friendsofsymfony/ckeditor-bundle": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.0",
+            "ref": "8eb1cd0962ded6a6d6e1e5a9b6d3e888f9f94ff6"
+        },
+        "files": [
+            "config/packages/fos_ckeditor.yaml"
+        ]
+    },
     "imagine/imagine": {
         "version": "v0.7.1"
     },
@@ -273,6 +285,9 @@
             "ref": "5bb3a8c27df824d195fa68bb635d074854f8498f"
         }
     },
+    "symfony/http-client": {
+        "version": "v4.3.1"
+    },
     "symfony/http-foundation": {
         "version": "v4.2.2"
     },
@@ -327,11 +342,17 @@
     "symfony/polyfill-intl-icu": {
         "version": "v1.10.0"
     },
+    "symfony/polyfill-intl-idn": {
+        "version": "v1.11.0"
+    },
     "symfony/polyfill-mbstring": {
         "version": "v1.10.0"
     },
     "symfony/polyfill-php72": {
         "version": "v1.10.0"
+    },
+    "symfony/polyfill-php73": {
+        "version": "v1.11.0"
     },
     "symfony/process": {
         "version": "v4.2.2"
